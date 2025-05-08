@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import subprocess
+import time
 import sys
 
 def compile_cpp(source_file, executable_file):
@@ -15,7 +16,9 @@ def compile_cpp(source_file, executable_file):
 def run_and_check(executable_file, expected_output):
     """运行可执行文件并检查输出，失败或输出不符打印相应结果。"""
     try:
+        start_time = time.time()
         result = subprocess.run([executable_file], check=True, capture_output=True, text=True)
+        exec_time = time.time()-start_time
     except subprocess.CalledProcessError:
         # Runtime Error
         print("CE")
@@ -27,6 +30,7 @@ def run_and_check(executable_file, expected_output):
         print("Accepted")
     else:
         print("Wrong Answer")
+    print("{:.6f}".format(exec_time))
 
 def main():
     source_file     = "/home/src/main.cpp"
